@@ -6,7 +6,7 @@ metadata:
   labels:
     app: flaskapi
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: flaskapi
@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
         - name: flaskapi
-          image: flask-api
-          imagePullPolicy: Never
+          image: oguzhandilber/user-db-flask:user-db-flask
           ports:
             - containerPort: 5000
           env:
@@ -36,10 +35,12 @@ kind: Service
 metadata:
   name: flask-service
 spec:
+  type: NodePort      
   ports:
   - port: 5000
     protocol: TCP
     targetPort: 5000
+    nodePort: 30100
   selector:
     app: flaskapi
-  type: LoadBalancer
+  
