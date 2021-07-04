@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,19 +31,4 @@ spec:
             - name: db_name
               value: flaskapi
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: flask-service
-  namespace: dev
-spec:
-  type: NodePort      
-  ports:
-  - port: 5000
-    protocol: TCP
-    targetPort: 5000
-    nodePort: 30100
-  selector:
-    app: flaskapi
-  
+ 

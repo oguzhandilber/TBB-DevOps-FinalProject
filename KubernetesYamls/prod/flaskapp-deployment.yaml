@@ -32,19 +32,5 @@ spec:
             - name: db_name
               value: flaskapi
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: flask-service
-  namespace: prod
-spec:
-  type: NodePort      
-  ports:
-  - port: 5000
-    protocol: TCP
-    targetPort: 5000
-    nodePort: 30101
-  selector:
-    app: flaskapi
+
   
