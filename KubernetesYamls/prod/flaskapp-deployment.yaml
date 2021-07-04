@@ -11,6 +11,8 @@ spec:
   selector:
     matchLabels:
       app: flaskapi
+  strategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -18,7 +20,7 @@ spec:
     spec:
       containers:
         - name: flaskapi
-          image: oguzhandilber/user-db-flask:user-db-flask
+          image: oguzhandilber/user-db-flask:v$DOCKER_BUILD_NUMBER
           ports:
             - containerPort: 5000
           env:
@@ -42,7 +44,7 @@ spec:
   - port: 5000
     protocol: TCP
     targetPort: 5000
-    nodePort: 30100
+    nodePort: 30101
   selector:
     app: flaskapi
   
