@@ -8,11 +8,11 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 3Gi
+    storage: 7Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/dev"
+    path: "/mnt/data"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
