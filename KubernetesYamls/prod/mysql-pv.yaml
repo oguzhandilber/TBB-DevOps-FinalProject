@@ -1,26 +1,26 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv-volume
+  name: mysql-pv-prod-volume
   namespace: prod
   labels:
     type: local
 spec:
-  storageClassName: manual
+  storageClassName: manual-prod
   capacity:
     storage: 7Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/data"
+    path: "/mnt/prod"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pv-claim
+  name: mysql-pv-prod-claim
   namespace: prod
 spec:
-  storageClassName: manual
+  storageClassName: manual-prod
   accessModes:
     - ReadWriteOnce
   resources:

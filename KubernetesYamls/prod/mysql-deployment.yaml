@@ -27,7 +27,7 @@ spec:
               name: flaskapi-secrets
               key: db_root_password
         ports:
-        - containerPort: 3307
+        - containerPort: 3306
           name: db-container
         volumeMounts:
           - name: mysql-persistent-storage
@@ -35,6 +35,6 @@ spec:
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pv-claim
+            claimName: mysql-pv-prod-claim
 
 
