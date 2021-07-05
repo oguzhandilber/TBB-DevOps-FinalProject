@@ -2,6 +2,7 @@
 import os
 from flask import jsonify, request, Flask
 from flaskext.mysql import MySQL
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -127,7 +128,20 @@ def delete_user(user_id):
         return resp
     except Exception as exception:
         return jsonify(str(exception))
+    
+healthcheck = {
+  "health": [
+    {
+      "status": "{OK}",
+    }
+   
+  ]
+}    
 
+@app.route("/healthcheck")
+def run1():
+    return jsonify(healthcheck)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+    app.run1(host="0.0.0.0", port=5000)
