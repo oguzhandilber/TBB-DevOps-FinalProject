@@ -36,5 +36,7 @@ spec:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: mysql-pv-test-claim
-
+        - name: mysql-initdb
+          configMap:
+            name: mysql-initdb-config
 
