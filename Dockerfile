@@ -15,5 +15,11 @@ RUN pip install -r requirements.txt --src /usr/local/src
 
 COPY . .
 
+ENV MYSQL_USERNAME="root"
+ENV db_root_password="123456"
+ENV db_name="flaskapi"
+ENV MYSQL_SERVICE_HOST="mysql"
+ENV MYSQL_SERVICE_PORT=3306
+
 EXPOSE 5000
 CMD [ "python", "flaskapi.py" ]
