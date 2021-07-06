@@ -1,6 +1,9 @@
 #!/bin/bash
 
-$environment = "dev" # You can write test or prod for other namespaces. 
+echo "Enter the Namespace you want to deploy: (dev,test or deploy)"  
+read environment
+
+echo "Deploying project to $environment Namespace"
 
 echo "Creating the Namespace..."
 kubectl apply -f ./KubernetesYamls/$environment/create-ns.yaml
