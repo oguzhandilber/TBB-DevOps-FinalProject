@@ -1,14 +1,12 @@
 ---
-# Fatih Gedik
-# 01.07.2021
-# Version 1.0.0
-# Ansible Playbook
+# Oğuzhan Dilber
+# 07.07.2021
 
 
 - name: RSYSLOG
-  hosts: rsys
+  hosts: rsys-log
   become: yes
-  remote_user: ged2
+  remote_user: root
   roles:
     - role: rsyslog
   tags: rsyslog
@@ -16,23 +14,23 @@
 - name: NETSTAT
   hosts: netstat
   become: yes
-  remote_user: ged2
+  remote_user: root
   roles:
     - role: netstat       
   tags: netstat   
 
 - name: DockerVersion
-  hosts: dockerversion
+  hosts: docker-version
   become: yes
-  remote_user: ged2
+  remote_user: root
   roles:
     - role: docker
   tags: docker 
 
 - name: KubectlVersion
-  hosts: kubectlversion
+  hosts: kubectl-version
   become: yes
-  remote_user: ged2
+  remote_user: root
   roles:
     - role: kubectl
   tags: kubectl 
@@ -40,7 +38,7 @@
 - name: TcpDump
   hosts: tcpdump
   become: yes
-  remote_user: ged2
+  remote_user: root
   roles: 
     - role: tcpdump
   tags: tcpdump  
