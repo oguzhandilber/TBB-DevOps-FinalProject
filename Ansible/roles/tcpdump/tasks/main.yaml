@@ -1,0 +1,9 @@
+---
+# Fatih Gedik
+# 01.07.2021
+# Version 1.0.0
+# Ansible Playbook
+
+
+- include_tasks: tcp.yaml
+  when: ansible_os_family == "Debian"
