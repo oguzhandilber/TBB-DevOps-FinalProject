@@ -1,0 +1,76 @@
+#!/usr/bin/env groovy
+
+node {
+    stage("Git Clone"){
+    git credentialsId: 'GITHUB',url:'https://github.com/oguzhandilber/TBB-DevOps-FinalProject.git'
+    }
+
+    stage("Kubernetes DEV Deployment"){
+
+    script {
+        env.DOCKER_BUILD_NUMBER=Jenkins.instance.getItem("buildjob").lastSuccessfulBuild.number
+    }
+    
+    sh 'echo ${DOCKER_BUILD_NUMBER}'
+    sh 'kubectl apply -f ./KubernetesYamls/dev/create-ns.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/dev/flaskapi-secrets.yaml'
+    sh 'envsubst < ./KubernetesYamls/dev/flaskapp-deployment.yaml | kubectl apply -f -'
+    sh 'kubectl apply -f ./KubernetesYamls/dev/flaskapp-service.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/dev/mysql-pv.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/dev/mysql-deployment.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/dev/mysql-service.yaml'
+         
+        
+        
+}
+    stage("Kubernetes Test Deployment"){
+        
+      def deployment = input(message:'Test Deploy ?',ok:'ok',parameters:[booleanParam(defaultValue:true,description:'',name:'Yes')])
+      
+      if(deployment == true){
+          
+    script {
+        env.DOCKER_BUILD_NUMBER=Jenkins.instance.getItem("buildjob").lastSuccessfulBuild.number
+    }
+    
+    sh 'echo ${DOCKER_BUILD_NUMBER}'
+    sh 'kubectl apply -f ./KubernetesYamls/test/create-ns.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/mysql-pv.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/mysql-service.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/mysql-configMap.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/flaskapi-secrets.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/mysql-deployment.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/flaskapp-service.yaml'
+    sh 'envsubst < ./KubernetesYamls/test/flaskapp-deployment.yaml | kubectl apply -f -'
+    
+    
+      } else {
+          echo "Deploy Skipped"
+      }
+}
+
+    stage("Kubernetes Prod Deployment"){
+        
+      def deployment = input(message:'Prod Deploy ?',ok:'ok',parameters:[booleanParam(defaultValue:true,description:'',name:'Yes')])
+      
+      if(deployment == true){
+          
+    script {
+        env.DOCKER_BUILD_NUMBER=Jenkins.instance.getItem("buildjob").lastSuccessfulBuild.number
+    }
+    
+    sh 'echo ${DOCKER_BUILD_NUMBER}'
+    sh 'kubectl apply -f ./KubernetesYamls/test/create-ns.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/mysql-pv.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/mysql-service.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/flaskapi-secrets.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/mysql-deployment.yaml'
+    sh 'kubectl apply -f ./KubernetesYamls/test/flaskapp-service.yaml'
+    sh 'envsubst < ./KubernetesYamls/test/flaskapp-deployment.yaml | kubectl apply -f -'
+    sh 'kubectl run -it --rm -n prod --image=mysql --restart=Never mysql-client -- mysql --host mysql --password=123456 -e "CREATE DATABASE IF NOT EXISTS flaskapi;USE flaskapi;CREATE TABLE IF NOT EXISTS users(user_id INT PRIMARY KEY AUTO_INCREMENT, user_name VARCHAR(255), user_email VARCHAR(255), user_password VARCHAR(255));"'
+    
+      } else {
+          echo "Deploy Skipped"
+      }
+}
+}
