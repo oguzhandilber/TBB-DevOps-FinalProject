@@ -131,10 +131,7 @@ def delete_user(user_id):
     
 healthcheck = {
   "health": [
-    {
       "status": "{OK}",
-    }
-   
   ]
 }    
 
