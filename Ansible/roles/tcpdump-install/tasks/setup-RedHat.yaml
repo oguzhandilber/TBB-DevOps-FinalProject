@@ -1,0 +1,7 @@
+---
+
+- name: install tcpdump
+  apt:
+    name: tcpdump
+    state: latest
+  notify: tcpdump-service-restart

@@ -1,0 +1,38 @@
+- hosts: rsyslog
+  remote_user: oguzhan
+  become: true
+  roles:
+    - role: rsyslog-install
+  tags: install-rsyslog
+
+
+- hosts: netstat
+  remote_user: oguzhan
+  become: true
+  roles:
+    - role: netstat-install
+  tags: install-netstat
+
+
+- hosts: tcpdump
+  remote_user: oguzhan
+  become: true
+  roles:
+    - role: tcpdump-install
+  tags: install-tcpdump
+
+
+- hosts: kubectl
+  remote_user: oguzhan
+  become: true
+  roles:
+    - role: kube-version
+  tags: kubectl-version
+
+
+- hosts: docker
+  remote_user: oguzhan
+  become: true
+  roles:
+    - role: docker-version
+  tags: docker-version

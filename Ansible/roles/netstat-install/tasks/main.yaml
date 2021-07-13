@@ -1,0 +1,21 @@
+---
+
+- name: Install netstat
+  apt:
+    name: net-tools
+    state: latest
+
+- name: Gather facts on listening ports
+  listen_ports_facts:
+
+- name: TCP ports
+  debug:
+    msg: "{{ ansible_facts.tcp_listen  | map(attribute='port') | sort | list }}"
+
+- name: UDP ports
+  debug:
+    msg: "{{ ansible_facts.udp_listen | map(attribute='port') | sort | list }}"
+
+- name: All ports
+  debug:
+    msg: "{{ (ansible_facts.tcp_listen + ansible_facts.udp_listen) | map(attribute='port') | unique | sort | list }}"
