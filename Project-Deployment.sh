@@ -23,4 +23,4 @@ kubectl apply -f ./KubernetesYamls/$environment/flaskapp-deployment.yaml
 echo "Configuring MySQL database..."
 kubectl run -it -n $environment --rm --image=mysql --restart=Never mysql-client -- mysql --host mysql --password=123456 -e "CREATE DATABASE IF NOT EXISTS flaskapi;USE flaskapi;CREATE TABLE IF NOT EXISTS users(user_id INT PRIMARY KEY AUTO_INCREMENT, user_name VARCHAR(255), user_email VARCHAR(255), user_password VARCHAR(255));INSERT INTO users(user_name, user_email, user_password ) VALUES ('oguzhan', 'k8s48@gmail.com', '123456');"
 
-echo "Flask app created in the specified Namespace successfully!"
+echo "Flask app created in the specified Namespace successfully ! "
